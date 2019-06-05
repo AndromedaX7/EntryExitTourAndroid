@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="320pt" android:orientation="vertical"
+        android:layout_height="match_parent" android:fitsSystemWindows="false"
+        tools:context=".DetailsActivity">
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="30pt" android:layout_marginTop="25dp">
+        <ImageView android:layout_width="16pt" android:layout_marginStart="8dp" android:layout_height="16pt"
+                   android:src="@drawable/ic_back"
+                   android:id="@+id/mBack"
+                   android:layout_centerVertical="true"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="15pt"
+                  android:id="@+id/mBack2"
+                  android:layout_centerVertical="true" android:text="返回"
+                  android:layout_toEndOf="@+id/mBack"/>
+
+    </RelativeLayout>
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:paddingStart="23pt" android:paddingEnd="23pt"
+                      android:orientation="vertical">
+
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="160pt">
+                <LinearLayout android:layout_width="182pt" android:layout_height="match_parent">
+                    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                                       android:layout_height="match_parent">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                  android:text="姓名" android:textSize="14pt"
+                                  android:paddingTop="10pt" android:paddingBottom="10pt"
+                                  app:layout_constraintStart_toStartOf="parent"
+                                  app:layout_constraintTop_toTopOf="parent" android:id="@+id/textView5"/>
+                        <TextView
+                                android:textSize="14pt" android:hint="正在加载姓名"
+                                android:layout_width="match_parent" android:layout_marginStart="84pt"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/name" app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/textView5"
+                                app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                        />
+                        <View android:layout_width="0dp" android:layout_height="1dp"
+                              android:background="@android:color/darker_gray"
+
+                              app:layout_constraintTop_toBottomOf="@+id/textView5"
+                              app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="4dp"
+                              app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="4dp"
+                        />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                  android:text="性别" android:textSize="14pt"
+                                  android:paddingTop="10pt" android:paddingBottom="10pt"
+                                  app:layout_constraintStart_toStartOf="parent"
+                                  android:id="@+id/textView6"
+
+                                  app:layout_constraintTop_toBottomOf="@+id/textView5"/>
+
+                        <TextView android:hint="正在加载性别"
+                                  android:textSize="14pt"
+                                  android:layout_width="match_parent" android:layout_marginStart="84pt"
+                                  android:layout_height="wrap_content"
+                                  android:id="@+id/sex" app:layout_constraintStart_toStartOf="parent"
+                                  app:layout_constraintTop_toTopOf="@+id/textView6"
+                                  app:layout_constraintBottom_toBottomOf="@+id/textView6"
+                        />
+                        <View android:layout_width="0dp" android:layout_height="1dp"
+                              android:background="@android:color/darker_gray"
+
+                              app:layout_constraintTop_toBottomOf="@+id/textView6"
+                              app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="4dp"
+                              app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="4dp"
+                              android:id="@+id/view"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                  android:text="出生日期" android:textSize="14pt"
+                                  android:paddingTop="10pt" android:paddingBottom="10pt"
+                                  app:layout_constraintStart_toStartOf="parent"
+                                  android:id="@+id/textView7"
+
+                                  app:layout_constraintTop_toBottomOf="@+id/textView6"/>
+
+                        <TextView
+                                android:textSize="14pt" android:gravity="center|start"
+                                android:layout_width="match_parent" android:layout_marginStart="84pt"
+                                android:layout_height="wrap_content" android:hint="正在加载出生日期"
+                                android:id="@+id/birthday" app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/textView7"
+                                app:layout_constraintBottom_toBottomOf="@+id/textView7"
+                        />
+                        <View android:layout_width="0dp" android:layout_height="1dp"
+                              android:background="@android:color/darker_gray"
+
+                              app:layout_constraintTop_toBottomOf="@+id/textView7"
+                              app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="4dp"
+                              app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="4dp"
+                        />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                  android:text="民族" android:textSize="14pt"
+                                  android:paddingTop="10pt" android:paddingBottom="10pt"
+                                  app:layout_constraintStart_toStartOf="parent"
+                                  android:id="@+id/textView8"
+
+                                  app:layout_constraintTop_toBottomOf="@+id/textView7"/>
+
+                        <TextView android:hint="正在加载民族"
+                                  android:textSize="14pt"
+                                  android:layout_width="match_parent" android:layout_marginStart="84pt"
+                                  android:layout_height="wrap_content"
+                                  android:id="@+id/nation" app:layout_constraintStart_toStartOf="parent"
+                                  app:layout_constraintTop_toTopOf="@+id/textView8"
+                                  app:layout_constraintBottom_toBottomOf="@+id/textView8"
+                        />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+                <FrameLayout android:layout_width="92pt" android:layout_height="138pt">
+                    <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+                               android:src="@mipmap/ic_launcher"
+                               android:id="@+id/mPhoto"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                              android:gravity="center" android:layout_gravity="bottom"
+                              android:text="制证照片" android:textColor="@android:color/white" android:textSize="9pt"
+
+                              android:background="#FDB62A"/>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                  android:background="@android:color/darker_gray"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                               android:layout_height="wrap_content">
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="身份证号" android:textSize="14pt"
+                          android:paddingTop="10pt" android:paddingBottom="10pt"
+                          app:layout_constraintStart_toStartOf="parent"
+                          app:layout_constraintTop_toTopOf="parent" android:id="@+id/textView9"/>
+                <TextView
+                        android:textSize="14pt" android:hint="正在加载身份证号"
+                        android:layout_width="match_parent" android:layout_marginStart="84pt"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/idCode" app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView9"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView9"
+                />
+                <View android:layout_width="0dp" android:layout_height="1dp"
+                      android:background="@android:color/darker_gray"
+
+                      app:layout_constraintTop_toBottomOf="@+id/textView9"
+                      app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="4dp"
+                      app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="4dp"
+                />
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="地域类型" android:textSize="14pt"
+                          android:paddingTop="10pt" android:paddingBottom="10pt"
+                          app:layout_constraintStart_toStartOf="parent"
+                          android:id="@+id/textView10"
+                          app:layout_constraintTop_toBottomOf="@+id/textView9"/>
+                <TextView
+                        android:textSize="14pt" android:hint="正在加载地域类型"
+                        android:layout_width="match_parent" android:layout_marginStart="84pt"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/areaType" app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView10"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView10"
+                />
+                <View android:layout_width="0dp" android:layout_height="1dp"
+                      android:background="@android:color/darker_gray"
+
+                      app:layout_constraintTop_toBottomOf="@+id/textView10"
+                      app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="4dp"
+                      app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="4dp"
+                />
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="户口所在地" android:textSize="14pt"
+                          android:paddingTop="10pt" android:paddingBottom="10pt"
+                          app:layout_constraintStart_toStartOf="parent"
+                          android:id="@+id/textView11"
+                          app:layout_constraintTop_toBottomOf="@+id/textView10"/>
+                <TextView
+                        android:textSize="14pt"
+                        android:layout_width="match_parent" android:layout_marginStart="84pt"
+                        android:layout_height="wrap_content" android:hint="正在加载户口所在地"
+                        android:id="@+id/registeredResidence" app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView11"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView11"
+                />
+                <View android:layout_width="0dp" android:layout_height="1dp"
+                      android:background="@android:color/darker_gray"
+                      app:layout_constraintTop_toBottomOf="@+id/textView11"
+                      app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="4dp"
+                      app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="4dp"
+                />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="现居地" android:textSize="14pt"
+                          android:paddingTop="10pt" android:paddingBottom="10pt"
+                          app:layout_constraintStart_toStartOf="parent"
+                          android:id="@+id/textView12"
+                          app:layout_constraintTop_toBottomOf="@+id/textView11"/>
+                <TextView
+                        android:textSize="14pt"
+                        android:layout_width="match_parent" android:layout_marginStart="84pt"
+                        android:layout_height="wrap_content" android:hint="正在加载现居地"
+                        android:id="@+id/currentResidence" app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView12"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView12"
+                />
+                <View android:layout_width="0dp" android:layout_height="1dp"
+                      android:background="@android:color/darker_gray"
+                      app:layout_constraintTop_toBottomOf="@+id/textView12"
+                      app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="4dp"
+                      app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="4dp"
+                />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="手机号码" android:textSize="14pt"
+                          android:paddingTop="10pt" android:paddingBottom="10pt"
+                          app:layout_constraintStart_toStartOf="parent"
+                          android:id="@+id/textView13"
+                          app:layout_constraintTop_toBottomOf="@+id/textView12"/>
+                <TextView
+                        android:textSize="14pt" android:hint="正在加载手机号码"
+                        android:layout_width="match_parent" android:layout_marginStart="84pt"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/phone" app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView13"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView13"
+                />
+                <View android:layout_width="0dp" android:layout_height="1dp"
+                      android:background="@android:color/darker_gray"
+                      app:layout_constraintTop_toBottomOf="@+id/textView13"
+                      app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="4dp"
+                      app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="4dp"
+                />
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="业务编号" android:textSize="14pt"
+                          android:paddingTop="10pt" android:paddingBottom="10pt"
+                          app:layout_constraintStart_toStartOf="parent"
+                          android:id="@+id/textView14"
+                          app:layout_constraintTop_toBottomOf="@+id/textView13"/>
+                <TextView
+                        android:textSize="14pt"
+                        android:layout_width="match_parent" android:layout_marginStart="84pt"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/operationCode" app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView14"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView14"
+                />
+                <View android:layout_width="0dp" android:layout_height="1dp"
+                      android:background="@android:color/darker_gray"
+                      app:layout_constraintTop_toBottomOf="@+id/textView14"
+                      app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="4dp"
+                      app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="4dp"
+                />
+
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="办理业务" android:textSize="14pt"
+                          android:paddingTop="10pt" android:paddingBottom="10pt"
+                          app:layout_constraintStart_toStartOf="parent"
+                          android:id="@+id/textView15"
+                          app:layout_constraintTop_toBottomOf="@+id/textView14"/>
+                <TextView
+                        android:text="边境游业务" android:textSize="14pt" android:hint="正在加载办理业务"
+                        android:layout_width="match_parent" android:layout_marginStart="84pt"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/operationType" app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView15"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView15"
+                />
+                <View android:layout_width="0dp" android:layout_height="1dp"
+                      android:background="@android:color/darker_gray"
+                      app:layout_constraintTop_toBottomOf="@+id/textView15"
+                      app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="4dp"
+                      app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="4dp"
+                />
+
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="取证时间" android:textSize="14pt"
+                          android:paddingTop="10pt" android:paddingBottom="10pt"
+                          app:layout_constraintStart_toStartOf="parent"
+                          android:id="@+id/textView16"
+                          app:layout_constraintTop_toBottomOf="@+id/textView15"/>
+                <TextView android:hint="正在加载取证时间"
+                          android:textSize="14pt"
+                          android:layout_width="match_parent" android:layout_marginStart="84pt"
+                          android:layout_height="wrap_content"
+                          android:id="@+id/getCertificatesTime" app:layout_constraintStart_toStartOf="parent"
+                          app:layout_constraintTop_toTopOf="@+id/textView16"
+                          app:layout_constraintBottom_toBottomOf="@+id/textView16"
+                />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_marginTop="20pt"
+                          android:layout_height="56pt" android:gravity="center_horizontal|bottom"
+                          android:paddingBottom="8pt">
+
+
+                <TextView android:layout_width="114pt" android:layout_height="40pt" android:text="取消"
+                          android:background="@drawable/shape_cancel" android:gravity="center" android:id="@+id/cancel"
+                          android:textColor="@android:color/white" android:layout_marginEnd="10pt"
+                          android:textSize="15pt"/>
+                <TextView android:layout_width="114pt" android:layout_height="40pt" android:text="拍摄现场人像"
+                          android:gravity="center" android:id="@+id/takePhoto"
+                          android:background="@drawable/shape_commit"
+                          android:textColor="@android:color/white"
+                          android:textSize="15pt"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
