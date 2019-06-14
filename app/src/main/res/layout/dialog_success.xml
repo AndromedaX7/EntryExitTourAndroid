@@ -6,6 +6,8 @@
               android:background="@color/colorAccent" android:layout_height="100pt">
     <FrameLayout android:layout_width="45pt" android:layout_height="45pt" android:layout_gravity="center"
                  android:src="@drawable/ic_action_check" android:layout_marginTop="25pt">
+        <ImageView android:layout_width="45pt" android:layout_height="45pt" android:layout_gravity="center" android:id="@+id/failed"
+                   android:src="@drawable/ic_action_failed" android:visibility="gone"/>
         <ImageView android:layout_width="45pt" android:layout_height="45pt" android:layout_gravity="center" android:id="@+id/su"
                    android:src="@drawable/ic_action_check" android:visibility="gone"/>
         <ProgressBar android:layout_width="45pt" android:layout_height="45pt"  android:id="@+id/pr"

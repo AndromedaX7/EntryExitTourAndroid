@@ -22,14 +22,37 @@
                       android:layout_alignParentEnd="true" android:layout_centerVertical="true">
             <ImageView android:layout_width="20pt" android:layout_height="20pt"
                        android:src="@android:drawable/ic_search_category_default"/>
-            <EditText android:layout_width="match_parent" android:layout_height="18pt" android:hint="业务编码"
-                      android:imeOptions="actionSearch" android:singleLine="true"
-                      android:background="@null" android:id="@+id/searchOperationCode"/>
+            <!--<EditText android:layout_width="match_parent" android:layout_height="18pt" android:hint="业务编码"-->
+            <!--android:inputType="number" android:maxLength="15"-->
+            <!--android:imeOptions="actionSearch" android:singleLine="true"-->
+            <!--android:background="@null" android:id="@+id/searchOperationCode"/>-->
+
+            <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent"
+                                                                   android:layout_height="28pt"
+                                                                   android:gravity="center_vertical"
+                                                                   android:focusable="true"
+                                                                   android:focusableInTouchMode="true"
+                                                                   android:background="@null"
+                                                                   app:counterEnabled="true" app:counterMaxLength="15"
+                                                                   android:imeOptions="actionSearch"
+                                                                   android:singleLine="true"
+                                                                   android:id="@+id/scanResult">
+                <com.google.android.material.textfield.TextInputEditText android:hint="业务编码(15位)"
+                                                                         android:id="@+id/searchOperationCode"
+                                                                         android:layout_width="match_parent"
+
+                                                                         android:inputType="number"
+                                                                         android:imeOptions="actionSearch"
+                                                                         android:singleLine="true"
+                                                                         android:layout_height="wrap_content"
+                                                                         android:background="@null"/>
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </RelativeLayout>
     <LinearLayout android:layout_width="match_parent" android:layout_height="30pt"
                   app:layout_constraintTop_toBottomOf="@+id/relativeLayout" android:id="@+id/linearLayout2">
-        <com.google.android.material.tabs.TabLayout android:layout_width="0dp" android:layout_weight="1" app:tabGravity="fill"
+        <com.google.android.material.tabs.TabLayout android:layout_width="0dp" android:layout_weight="1"
+                                                    app:tabGravity="fill"
                                                     android:id="@+id/tabs" app:tabIndicatorColor="#347EFD"
                                                     android:layout_marginStart="54pt"
                                                     app:tabIndicatorHeight="2pt"
@@ -57,6 +80,20 @@
                                                app:layout_constraintStart_toStartOf="parent"
                                                app:layout_constraintEnd_toEndOf="parent"
     />
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:orientation="vertical"
+                  android:id="@+id/place_holder" android:visibility="gone"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                  app:layout_constraintTop_toBottomOf="@+id/tip"
+                  app:layout_constraintStart_toStartOf="parent" android:gravity="center"
+                  app:layout_constraintEnd_toEndOf="parent">
+        <ImageView android:layout_width="60pt" android:layout_height="60pt" android:src="@drawable/ic_empty"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_marginTop="10pt"
+                  android:layout_height="wrap_content" android:text="暂无数据" android:textSize="15pt"/>
+
+
+    </LinearLayout>
 
 
     <RelativeLayout android:layout_width="match_parent" android:layout_height="0dp" android:visibility="gone"

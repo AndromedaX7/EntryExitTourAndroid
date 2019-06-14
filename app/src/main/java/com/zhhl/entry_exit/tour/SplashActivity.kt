@@ -5,14 +5,36 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import c.feature.autosize.AutoAdaptSize
 import c.feature.autosize.ComplexUnit
-import c.feature.extension.transparentStatus
 import kotlinx.android.synthetic.main.activity_splash.*
 
-class SplashActivity : AppCompatActivity(), AutoAdaptSize {
+class SplashActivity : SplashActivityWrapper(), AutoAdaptSize {
+    override fun login(token: String?) {
+        val login = HttpDSL()
+        login {
+            requestDescription {
+                usingOkHttp = false
+                uri = "http://192.168.20.230:8081/uas/sso/singlesignoncontrol/checkbill.do"
+                method = Method.POST
+                body = "strBill=$token"
+                mimeType = MimeType.APPLICATION_X_FORM_URLENCODED
+            }
+            callType(LoginBean::class.java, {
+                AppCache.loginBean = it
+                AppCache.waterMark(this@SplashActivity)
+            }, {
+
+            })
+        }
+    }
+
+    override fun uaacApiError(error: String?) {
+        Log.e("err", error)
+    }
+
     override fun complexUnit(): ComplexUnit = ComplexUnit.PT
     override fun designSize() = 320
     override fun onCreate(savedInstanceState: Bundle?) {

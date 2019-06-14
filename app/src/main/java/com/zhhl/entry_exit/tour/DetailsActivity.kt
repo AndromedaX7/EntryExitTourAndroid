@@ -1,6 +1,7 @@
 package com.zhhl.entry_exit.tour
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -12,11 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import c.feature.autosize.AutoAdaptSize
 import c.feature.autosize.ComplexUnit
-import c.feature.dsl.okhttp.Method
-import c.feature.dsl.okhttp.MimeType
-import c.feature.dsl.okhttp.OkHttpDSL
-import c.feature.extension.get
-import c.feature.extension.transparentStatus
 import kotlinx.android.synthetic.main.activity_details.*
 import java.io.File
 import java.io.FileOutputStream
@@ -28,6 +24,7 @@ class DetailsActivity : AppCompatActivity(), AutoAdaptSize {
         const val OPERATION_CODE = "1"
     }
 
+    private var dialog: AlertDialog? = null
     private var path: String = ""
     private var mOperationCode = ""
     private val camera = 1;
@@ -37,14 +34,16 @@ class DetailsActivity : AppCompatActivity(), AutoAdaptSize {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
+        AppCache.waterMark(this)
         getIntentData()
+        dialog = DialogFactory.success(this, "数据加载中....")
         requestInformation()
         transparentStatus(Color.WHITE)
         val root = File(filesDir, "capture")
         if (!root.exists()) {
             root.mkdirs()
         }
-        val photoFile = File(root, "${System.currentTimeMillis()}.png")
+        val photoFile = File(root, "xc$mOperationCode.jpg")
         path = photoFile.absolutePath
         cancel.setOnClickListener {
             finish()
@@ -69,25 +68,35 @@ class DetailsActivity : AppCompatActivity(), AutoAdaptSize {
     //http://10.106.54.118:25500/crjInterface/selecRyxx.do
 
     private fun requestInformation() {
-        val okHttp = OkHttpDSL()
+        dialog?.show()
+        val okHttp = HttpDSL()
         okHttp {
             requestDescription {
-                uri = "http://192.168.20.228:7098/crjInterface/selecRyxx.do"
+                uri = "http://192.168.20.228:7098/crjInterface/selecHxRyxx.do"
                 method = Method.POST
-                body = "ywbh=$mOperationCode&sbid=232"//&sbid=232
+                body = "ywbh=$mOperationCode"//&sbid=232
                 mimeType = MimeType.APPLICATION_X_FORM_URLENCODED
             }
+
             callType(DataInformation::class.java, {
                 if (it.code == "1") {
                     setData(it)
+                    dialog?.dismiss()
+                } else {
+                    DialogFactory.progressToFailed(dialog!!, "数据读取失败")
+                    mBack.postDelayed({
+                        DialogFactory.toProgress(dialog!!, "数据加载中....")
+                        dialog?.dismiss()
+                        finish()
+                    }, 3000)
                 }
             }, {
-
-            })
-            callString({
-                Log.e("Test", it);
-            }, {
-                it.printStackTrace()
+                DialogFactory.progressToFailed(dialog!!, "数据读取失败")
+                mBack.postDelayed({
+                    DialogFactory.toProgress(dialog!!, "数据加载中....")
+                    dialog?.dismiss()
+                    finish()
+                }, 3000)
             })
         }
     }
@@ -96,7 +105,19 @@ class DetailsActivity : AppCompatActivity(), AutoAdaptSize {
         val data = information.data[0]
         name.text = data.name
         sex.text = data.xb
-        birthday.text = data.csrq
+
+
+        birthday.text = if (data.csrq.isEmpty()) {
+            var id = ""
+            if (data.sfzh.length == 18) {
+                id = data.sfzh.subSequence(6, 6 + 8).toString()
+//            }else{
+//               id= data.sfzh.subSequence(6,6+6).toString()
+            }
+            id
+        } else {
+            data.csrq
+        }
         nation.text = "${data.mz}族"
         idCode.text = data.sfzh
         areaType.text = data.dylx
@@ -104,9 +125,17 @@ class DetailsActivity : AppCompatActivity(), AutoAdaptSize {
         currentResidence.text = data.xjd
         phone.text = data.sjhm
         operationCode.text = data.ywbh
-        operationType.text = data.ywlx
-        getCertificatesTime.text = data.qzsj
+        operationType.text = if (data.ywlx.isEmpty()) {
+            "边境游业务"
+        } else {
+            data.ywlx
+        }
 
+        getCertificatesTime.text = if (data.qzsj.isEmpty()) {
+            "未取证"
+        } else {
+            data.qzsj
+        }
 
         var photo = File(filesDir.absolutePath + "/capture", "$mOperationCode.jpg")
         var out = FileOutputStream(photo);

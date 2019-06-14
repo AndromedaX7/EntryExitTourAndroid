@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import c.feature.autosize.AutoAdaptSize
 import c.feature.autosize.ComplexUnit
-import c.feature.extension.transparentStatus
 import com.uuzuche.lib_zxing.activity.CaptureActivity
 import com.uuzuche.lib_zxing.activity.CodeUtils
 import kotlinx.android.synthetic.main.activity_scan2.*
@@ -27,7 +26,7 @@ class ScanQrActivity : AppCompatActivity(), AutoAdaptSize {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan2)
         transparentStatus(Color.WHITE)
-
+        AppCache.waterMark(this)
         scanResultContent.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 s?.let {
@@ -36,7 +35,7 @@ class ScanQrActivity : AppCompatActivity(), AutoAdaptSize {
                         scanResult.error = "请输入业务编码"
                     } else if (it.length != 15) {
                         scanResult.isErrorEnabled = true
-                        scanResult.error="业务编码长度不正确"
+                        scanResult.error = "业务编码长度不正确"
                     } else {
                         scanResult.isErrorEnabled = false
                     }

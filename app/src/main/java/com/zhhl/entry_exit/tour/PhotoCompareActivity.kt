@@ -15,10 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import c.feature.autosize.AutoAdaptSize
 import c.feature.autosize.ComplexUnit
-import c.feature.dsl.okhttp.Method
-import c.feature.dsl.okhttp.MimeType
-import c.feature.dsl.okhttp.OkHttpDSL
-import c.feature.extension.transparentStatus
 import kotlinx.android.synthetic.main.activity_photo_compare.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -26,6 +22,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.net.URLEncoder
 
 class PhotoCompareActivity : AppCompatActivity(), AutoAdaptSize {
     companion object {
@@ -45,16 +42,14 @@ class PhotoCompareActivity : AppCompatActivity(), AutoAdaptSize {
         super.onCreate(savedInstanceState)
         transparentStatus(Color.WHITE)
         setContentView(R.layout.activity_photo_compare)
-        successDialog = DialogFactory.success(this, "信息提交中...")
+        AppCache.waterMark(this)
+        successDialog = DialogFactory.success(this, "图片上传中...")
         path = intent.getStringExtra("photoPath")
         content = intent.getStringExtra("content")
         options.inSampleSize = 2
         window.decorView.post {
             getImage()
         }
-
-
-
 
         mBack.setOnClickListener {
             finish()
@@ -64,30 +59,15 @@ class PhotoCompareActivity : AppCompatActivity(), AutoAdaptSize {
         }
 
         commit.setOnClickListener {
-            successDialog?.let {
-                it.show()
-                mBack.postDelayed({
-                    DialogFactory.progressToSuccess(it, "信息已提交")
-                    mBack.postDelayed({
-                        DialogFactory.toProgress(it, "信息提交中...")
-                        it.dismiss()
-                        setResult(commitSuccess)
-                        finish()
-                    }, 3000)
-                }, 3000)
-
-            }
-
-
+            upload()
         }
 
         takePhoto.setOnClickListener {
-
             val root = File(filesDir, "capture")
             if (!root.exists()) {
                 root.mkdirs()
             }
-            val photoFile = File(root, "${System.currentTimeMillis()}.png")
+            val photoFile = File(root, "xc$content.jpg")
             this.path = photoFile.absolutePath
             val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             val uri = FileProvider.getUriForFile(this, PhotoProvider.authentication, photoFile)
@@ -96,13 +76,11 @@ class PhotoCompareActivity : AppCompatActivity(), AutoAdaptSize {
                 MediaStore.EXTRA_OUTPUT, uri
             )
             startActivityForResult(cameraIntent, camera)
-//            startActivity(Intent(this,PhotoCompareActivity::class.java))
         }
     }
 
     private fun getImage() {
-
-        val bitmap0 = BitmapFactory.decodeFile(path, options)
+        val bitmap0 = BitmapFactory.decodeFile(filesDir.absolutePath + "/capture/xc$content.jpg", options)
         val bitmap1 = BitmapFactory.decodeFile(filesDir.absolutePath + "/capture/$content.jpg", options)
         currentPhoto.setImageBitmap(bitmap0)
         remotePhoto.setImageBitmap(bitmap1)
@@ -110,9 +88,8 @@ class PhotoCompareActivity : AppCompatActivity(), AutoAdaptSize {
     }
 
     private fun compareFaces(face0: String, face1: String) {
-        val okHttp = OkHttpDSL()
+        val okHttp = HttpDSL()
         okHttp {
-
             requestDescription {
                 method = Method.POST
                 mimeType = MimeType.APPLICATION_JSON
@@ -133,30 +110,56 @@ class PhotoCompareActivity : AppCompatActivity(), AutoAdaptSize {
                 it.printStackTrace()
                 indicator.visibility = View.GONE
             })
-
-//            requestDescription {
-//                uri = "http://192.168.20.228:7098/RXDB/RXBDServlet"
-//                method = Method.POST
-//                mimeType = MimeType.APPLICATION_X_FORM_URLENCODED
-////                mimeType = MimeType.APPLICATION_JSON
-//                body = "base64_1=$_face0&base64_2=$_face1"
-////                body= " { \"base64_1\":\"$face0\",\"base64_2\":\"$face1\"}"
-//            }
-//            callType(FaceResult2::class.java, {
-//                Log.e("result", "${it.status}::${it.msg}::${it.data.sim}")
-//                indicator.visibility = View.GONE
-//
-//                if (it.data.errorcode == 0)
-//                    sim.text = "${it.data.sim.toString().substring(0..4)}%"
-//                else {
-//                    sim.text = "---(${it.data.errormsg})"
-//                }
-//            }, {
-//                it.printStackTrace()
-//                indicator.visibility = View.GONE
-//            })
+        }
+    }
 
 
+    private fun upload() {;
+        successDialog?.show()
+        val out = ByteArrayOutputStream()
+        val options = BitmapFactory.Options()
+        options.inSampleSize = 4
+        val bitmap = BitmapFactory.decodeFile(path, options)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, out)
+        val src = out.toByteArray()
+        out.close()
+        val base64_2 = String(Base64.encode(src, Base64.DEFAULT))
+        val base64 = URLEncoder.encode(base64_2.replace("\n", ""), "utf-8");
+        val dsl = HttpDSL()
+        dsl {
+            requestDescription {
+                uri = "http://192.168.20.228:7098/crjInterface/uploudImghx.do"
+                body = "ywbh=$content&xcrxxx=$base64&sbid=${AppCache.loginBean?.userInfo?.code}"
+                method = Method.POST
+                mimeType = MimeType.APPLICATION_X_FORM_URLENCODED
+            }
+            callString({
+                Log.e("upload", it);//{"code":"0"}
+                if (it.contains("1")) {
+                    DialogFactory.progressToSuccess(successDialog!!, "图片已上传")
+                    mBack.postDelayed({
+                        DialogFactory.toProgress(successDialog!!, "图片上传中...")
+                        successDialog?.dismiss()
+                        setResult(commitSuccess)
+                        finish()
+                    }, 3000)
+
+                } else {
+                    DialogFactory.progressToFailed(successDialog!!, "图片上传失败")
+                    mBack.postDelayed({
+                        DialogFactory.toProgress(successDialog!!, "图片上传中...")
+                        successDialog?.dismiss()
+                    }, 3000)
+                    successDialog?.dismiss()
+                }
+            }, {
+                Log.e("upload", "Error", it)
+                DialogFactory.progressToFailed(successDialog!!, "图片上传失败")
+                mBack.postDelayed({
+                    DialogFactory.toProgress(successDialog!!, "图片上传中...")
+                    successDialog?.dismiss()
+                }, 3000)
+            })
         }
     }
 

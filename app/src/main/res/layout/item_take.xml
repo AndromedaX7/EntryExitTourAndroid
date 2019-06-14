@@ -9,22 +9,25 @@
             android:layout_height="wrap_content">
         <ImageView android:layout_width="40pt" android:layout_marginTop="5pt" android:layout_marginBottom="5pt"
                    android:layout_marginEnd="8pt" android:layout_height="40pt" android:layout_marginStart="18pt"
-                   android:src="@mipmap/ic_launcher"/>
+                   android:src="@mipmap/ic_launcher" android:id="@+id/icon"/>
         <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent"
                       android:gravity="center_vertical"
                       android:orientation="vertical">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="10pt"
-                      android:layout_marginBottom="2pt" android:text="220183111110121103"/>
+                      android:layout_marginBottom="2pt" android:text="220183111110121103" android:id="@+id/idCode"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="10pt"
                       android:layout_marginBottom="2pt"
-                      android:text="2019.04.12"/>
+                      android:text="2019.04.12" android:id="@+id/time"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="10pt"
+                      android:id="@+id/name"
                       android:text="王一"/>
         </LinearLayout>
-        <TextView android:layout_width="46pt" android:layout_height="13pt" android:layout_marginEnd="20pt"
-                  android:background="@drawable/shape_file" android:id="@+id/history_file"
-                  android:text="归档" android:gravity="center" android:textColor="@android:color/white"
-                  android:textSize="8pt"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="10pt"
+                  android:text="归档" android:textColor="@android:color/white" android:id="@+id/toFile"
+                  android:paddingEnd="10pt" android:paddingStart="10pt" android:paddingTop="5pt"
+                  android:background="@color/colorAccent"
+                  android:paddingBottom="5pt" android:layout_marginEnd="10pt"/>
 
     </LinearLayout>
     <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="5pt"

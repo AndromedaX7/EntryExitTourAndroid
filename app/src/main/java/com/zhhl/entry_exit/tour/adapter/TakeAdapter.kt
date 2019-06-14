@@ -1,40 +1,47 @@
 package com.zhhl.entry_exit.tour.adapter
 
-import android.app.AlertDialog
+import android.util.Base64
+import android.util.Log
 import android.view.View
-import c.feature.recyclerview.swipemenu.BaseRecyclerViewAdapter
-import com.zhhl.entry_exit.tour.DialogFactory
+import com.bumptech.glide.Glide
 import com.zhhl.entry_exit.tour.R
+import com.zhhl.entry_exit.tour.SearchData
 import kotlinx.android.synthetic.main.item_take.view.*
 
-class TakeAdapter : BaseRecyclerViewAdapter<String, TakeAdapter.TakeViewHolder>() {
+class TakeAdapter : BaseRecyclerViewAdapter<SearchData.DataBean, TakeAdapter.TakeViewHolder>() {
 
-    private  var dialog :AlertDialog?=null
-    override fun createViewHolder(view: View):TakeViewHolder{
-        if (dialog==null){
-            dialog=DialogFactory.success(view.context,"数据归档中...")
-        }
+
+    override fun createViewHolder(view: View): TakeViewHolder {
         return TakeViewHolder(this, view)
+    }
+
+
+    override fun onBindViewHolder(vh: TakeViewHolder, position: Int) {
+        super.onBindViewHolder(vh, position)
+        vh.name.text = "${data[position].name}/${data[position].sfzh}"
+        Log.e("name", data[position].name)
+        vh.idCode.text = data[position].ywbh
+        vh.time.text = data[position].createtime
+        Glide.with(vh.icon).load(Base64.decode(data[position].zzzp, Base64.DEFAULT)).into(vh.icon)
     }
 
     override fun layoutId() = R.layout.item_take
 
     class TakeViewHolder(adapter: TakeAdapter, view: View) : BaseRecyclerViewAdapter.RecyclerViewHolder(adapter, view) {
-        val history_file=view.history_file
-        init {
-            history_file.setOnClickListener {
-                adapter.dialog?.let {
-                    it.show()
-                    history_file.postDelayed({
-                        DialogFactory.progressToSuccess(it,"数据已归档")
-                        history_file.postDelayed({
-                            DialogFactory.toProgress(it,"数据归档中...")
-                            it.dismiss()
-                        },3000)
-                    },3000)
+        val name = view.name
+        val idCode = view.idCode
+        val time = view.time
+        val icon = view.icon
+        val toFile = view.toFile
 
+        init {
+            toFile.setOnClickListener {
+                adapter.toFileCallback?.let {
+                    it(adapter.data[layoutPosition].ywbh)
                 }
             }
         }
     }
+
+    var toFileCallback: ((String) -> Unit)? = null
 }
